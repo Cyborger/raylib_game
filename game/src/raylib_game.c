@@ -42,7 +42,8 @@ int main(void)
 	InitAudioDevice(); 
 	SetTargetFPS(TARGET_FPS);
 
-	Car car;
+	GameTransform carTransform = {{400, 800}, {30, 60}};
+	Car car = create_car(carTransform);
 
 	float nitroBarWidth = 100;
 	float nitroBarHeight = 30;
