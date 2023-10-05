@@ -41,39 +41,12 @@ int main(void)
 	InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Projet 1 DEFI - BOUCHAUD Lucas - SEZNEC Romain");
 	InitAudioDevice(); 
 	SetTargetFPS(TARGET_FPS);
-	
-	Vector2 carSpeed = { 0, 0 };
-	Vector2 carVelocity = { 0, 0 };
-	Vector2 carPos = { 400, 800 };
 
-	float coefFrottement = 5;
-	float puissanceMoteur = 200;
-	Vector2 forceMoteur = { 0, 0 };
-
-	float nitroReserve = 100;
-	bool nitroActivated = false;
-	bool nitroRecharge = false;
-
-	float carWidth = 30, carHeight = 60;
-	Color carColor = RED;
-
-	float habitacleWidth = carWidth / 3, habitacleHeight = carHeight / 3;
-	Color habitacleColor = DARKGRAY;
-
-	float headlightRadius = carWidth / 6;
-	Color headlightColor = BLUE;
-
-	float wheelWidth = carWidth / 6, wheelHeight = carHeight / 6;
-	float wheelOffsetY = carHeight / 12, wheelOffsetX = carWidth / 15;
-	Color wheelColor = BLACK;
-
-	float backlightWidth = carWidth / 3;
-	float backlightHeight = carHeight / 15;
-	Color backlightColor = RED;
+	Car car;
 
 	float nitroBarWidth = 100;
 	float nitroBarHeight = 30;
-	Vector2 nitroBar = { SCREENSIZE.x - 10 - nitroBarWidth, SCREENSIZE.y - 10 - nitroBarHeight };
+	Vector2 nitroBar = { WINDOW_WIDTH - 10 - nitroBarWidth, WINDOW_HEIGHT - 10 - nitroBarHeight };
 
 	Vector2 obstaclePos = { 200, 150 };
 	Vector2 obstacleSize = { 100, 50 };
@@ -96,86 +69,81 @@ int main(void)
 		/*
 		* Gestion de l'input
 		*/
-		carVelocity.x = -coefFrottement * carSpeed.x + forceMoteur.x;
-		carVelocity.y = -coefFrottement * carSpeed.y + forceMoteur.y;
+		car.acceleration.x = -car.frictionCoefficient * car.speed.x + car.motorForce.x;
+		car.acceleration.y = -car.frictionCoefficient * car.speed.y + car.motorForce.y;
 
-		carSpeed.x = carSpeed.x + carVelocity.x*GetFrameTime();
-		carSpeed.y = carSpeed.y + carVelocity.y*GetFrameTime();
+		car.speed.x = car.speed.x + car.acceleration.x*GetFrameTime();
+		car.speed.y = car.speed.y + car.acceleration.y*GetFrameTime();
 
 		if (IsKeyDown(KEY_LEFT))
-			forceMoteur.x = -coefFrottement * puissanceMoteur;
+			car.motorForce.x = -car.frictionCoefficient * car.horsePower;
 
 		if (IsKeyDown(KEY_RIGHT))
-			forceMoteur.x = coefFrottement * puissanceMoteur;
+			car.motorForce.x = car.frictionCoefficient * car.horsePower;
 
 		if (IsKeyDown(KEY_UP))
-			forceMoteur.y = -coefFrottement * puissanceMoteur;
+			car.motorForce.y = -car.frictionCoefficient * car.horsePower;
 
 		if (IsKeyDown(KEY_DOWN))
 		{
-			forceMoteur.y = coefFrottement * puissanceMoteur;
-			backlightColor = YELLOW;
+			car.motorForce.y = car.frictionCoefficient * car.horsePower;
+			car.backlights.color = YELLOW;
 		}
 		else
-			backlightColor = RED;
+			car.backlights.color = RED;
 
-		if (nitroRecharge || nitroReserve <= 0)
+		if (IsKeyDown(KEY_LEFT_SHIFT) && car.nitro.reserve > 0)
 		{
-			nitroActivated = false;
-			nitroReserve += .5;
-			nitroRecharge = nitroReserve < 100;
-		}
-		else if (IsKeyDown(KEY_LEFT_SHIFT) && !nitroRecharge) // nitro
-		{
-			nitroActivated = true;
-			nitroReserve --;
-			puissanceMoteur = 600;
+			car.horsePower = 600;
+			car.nitro.active = true;
+			car.nitro.reserve--;
 		}
 		else
 		{
-			nitroActivated = false;
-			puissanceMoteur = 200;
+			car.horsePower = 200;
+			car.nitro.active = false;
+			car.nitro.reserve += car.nitro.reserve < 100 ? .5F : .0F;
 		}
 
 		if (!(IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_UP) || IsKeyDown(KEY_DOWN))) {
-			forceMoteur.x = 0;
-			forceMoteur.y = 0;
+			car.motorForce.x = 0;
+			car.motorForce.y = 0;
 		}
 
-		carPos.x = carPos.x + carSpeed.x*GetFrameTime();
-		carPos.y = carPos.y + carSpeed.y*GetFrameTime();
+		car.transform.position.x = car.transform.position.x + car.speed.x*GetFrameTime();
+		car.transform.position.y = car.transform.position.y + car.speed.y*GetFrameTime();
 
 		/*
 		Bords
 		*/
-		if ((carPos.x - wheelWidth / 2) < 0)
+		if ((car.transform.position.x - car.wheels.size.x / 2) < 0)
 		{
-			carPos.x = wheelWidth / 2;
-			carSpeed.x = 0;
-			carSpeed.y = 0;
+			car.transform.position.x = car.wheels.size.x / 2;
+			car.speed.x = 0;
+			car.speed.y = 0;
 		}
-		if ((carPos.x + carWidth + wheelWidth / 2) > SCREENSIZE.x)
+		if ((car.transform.position.x + car.transform.size.x + car.wheels.size.x / 2) > WINDOW_WIDTH)
 		{
-			carPos.x = SCREENSIZE.x - carWidth -wheelWidth / 2;
-			carSpeed.x = 0;
-			carSpeed.y = 0;
+			car.transform.position.x = WINDOW_WIDTH - car.transform.size.x -car.wheels.size.x / 2;
+			car.speed.x = 0;
+			car.speed.y = 0;
 		}
-		if ((carPos.y - (carWidth / 6)) < 0)
+		if ((car.transform.position.y - (car.transform.size.x / 6)) < 0)
 		{
-			carPos.y = carWidth / 6;
-			carSpeed.x = 0;
-			carSpeed.y = 0;
+			car.transform.position.y = car.transform.size.x / 6;
+			car.speed.x = 0;
+			car.speed.y = 0;
 		}
-		if ((carPos.y + carHeight) > SCREENSIZE.y)
+		if ((car.transform.position.y + car.transform.size.y) > WINDOW_HEIGHT)
 		{
-			carPos.y = SCREENSIZE.y - carHeight;
-			carSpeed.x = 0;
-			carSpeed.y = 0;
+			car.transform.position.y = WINDOW_HEIGHT - car.transform.size.y;
+			car.speed.x = 0;
+			car.speed.y = 0;
 		}
 
 		/*
 		Obstacle logic
-		if (carPos.x > 400)
+		if (car.transform.position.x > 400)
 		{
 			obstacleColor = SKYBLUE;
 		}
@@ -188,16 +156,16 @@ int main(void)
 		/*
 		{
 			if (IsKeyDown(KEY_O))
-				carHeight++;
+				car.transform.size.y++;
 
 			if (IsKeyDown(KEY_K))
-				carWidth++;
+				car.transform.size.x++;
 
 			if (IsKeyDown(KEY_L))
-				carHeight--;
+				car.transform.size.y--;
 
 			if (IsKeyDown(KEY_M) || IsKeyDown(KEY_SEMICOLON))
-				carWidth--;
+				car.transform.size.x--;
 		}
 		*/
 
@@ -208,40 +176,40 @@ int main(void)
 			ClearBackground(RAYWHITE);
 
 			// Phares
-			DrawCircle(carPos.x + headlightRadius, carPos.y, headlightRadius, headlightColor);
-			DrawCircle(carPos.x + carWidth - headlightRadius, carPos.y, headlightRadius, headlightColor);
+			DrawCircle(car.transform.position.x + car.headlights.radius, car.transform.position.y, car.headlights.radius, car.headlights.color);
+			DrawCircle(car.transform.position.x + car.transform.size.x - car.headlights.radius, car.transform.position.y, car.headlights.radius, car.headlights.color);
 
 			// Habitacle
-			DrawRectangle(carPos.x, carPos.y, carWidth, carHeight, carColor);
-			DrawEllipse(carPos.x + carWidth / 2, carPos.y + carHeight / 2, habitacleWidth, habitacleHeight, habitacleColor);
+			DrawRectangle(car.transform.position.x, car.transform.position.y, car.transform.size.x, car.transform.size.y, car.color);
+			DrawEllipse(car.transform.position.x + car.transform.size.x / 2, car.transform.position.y + car.transform.size.y / 2, car.cockpit.size.x, car.cockpit.size.y, car.cockpit.color);
 
 			// Roues
-			DrawRectangle(carPos.x - wheelOffsetX, carPos.y + wheelOffsetY, wheelWidth, wheelHeight, wheelColor);
-			DrawRectangle(carPos.x - wheelOffsetX, carPos.y + carHeight - 3 * wheelOffsetY, wheelWidth, wheelHeight, wheelColor);
+			DrawRectangle(car.transform.position.x - car.wheels.offset.x, car.transform.position.y + car.wheels.offset.y, car.wheels.size.x, car.wheels.size.y, car.wheels.color);
+			DrawRectangle(car.transform.position.x - car.wheels.offset.x, car.transform.position.y + car.transform.size.y - 3 * car.wheels.offset.y, car.wheels.size.x, car.wheels.size.y, car.wheels.color);
 
-			DrawRectangle(carPos.x + carWidth - wheelOffsetX, carPos.y + wheelOffsetY, wheelWidth, wheelHeight, wheelColor);
-			DrawRectangle(carPos.x + carWidth - wheelOffsetX, carPos.y + carHeight - 3 * wheelOffsetY, wheelWidth, wheelHeight, wheelColor);
+			DrawRectangle(car.transform.position.x + car.transform.size.x - car.wheels.offset.x, car.transform.position.y + car.wheels.offset.y, car.wheels.size.x, car.wheels.size.y, car.wheels.color);
+			DrawRectangle(car.transform.position.x + car.transform.size.x - car.wheels.offset.x, car.transform.position.y + car.transform.size.y - 3 * car.wheels.offset.y, car.wheels.size.x, car.wheels.size.y, car.wheels.color);
 
 			// Feux de recul
-			DrawRectangle(carPos.x, carPos.y + carHeight - backlightHeight, backlightWidth, backlightHeight, backlightColor);
-			DrawRectangle(carPos.x + carWidth - backlightWidth, carPos.y + carHeight - backlightHeight, backlightWidth, backlightHeight, backlightColor);
+			DrawRectangle(car.transform.position.x, car.transform.position.y + car.transform.size.y - car.backlights.size.y, car.backlights.size.x, car.backlights.size.y, car.backlights.color);
+			DrawRectangle(car.transform.position.x + car.transform.size.x - car.backlights.size.x, car.transform.position.y + car.transform.size.y - car.backlights.size.y, car.backlights.size.x, car.backlights.size.y, car.backlights.color);
 
-			if (nitroActivated)
-				DrawRectangle(carPos.x, carPos.y + carHeight, carWidth, carHeight / 15, BLUE);
+			if (car.nitro.active)
+				DrawRectangle(car.transform.position.x, car.transform.position.y + car.transform.size.y, car.transform.size.x, car.transform.size.y / 15, BLUE);
 
 			// nitro counter
 			DrawRectangle(nitroBar.x, nitroBar.y, nitroBarWidth + 4, nitroBarHeight + 4, DARKBLUE);
 			DrawRectangle(nitroBar.x + 2, nitroBar.y + 2, nitroBarWidth, nitroBarHeight, WHITE);
-			DrawRectangle(nitroBar.x + 2, nitroBar.y + 2, nitroReserve, nitroBarHeight, DARKBLUE);
+			DrawRectangle(nitroBar.x + 2, nitroBar.y + 2, car.nitro.reserve, nitroBarHeight, DARKBLUE);
 
 			// Debug
 			DrawFPS(10, 10);
-			DrawText(TextFormat("coords : %.2fx%.0f", carPos.x, carPos.y), debugX, debugY + debugSpacing * debugLine++, 10, wheelColor);
-			DrawText(TextFormat("speed : %.2fx%.0f", carSpeed.x, carSpeed.y), debugX, debugY + debugSpacing * debugLine++, 10, wheelColor);
-			DrawText(TextFormat("velocity : %.2fx%.0f", carVelocity.x, carVelocity.y), debugX, debugY + debugSpacing * debugLine++, 10, wheelColor);
-			DrawText(TextFormat("nitro reserve : %.2f", nitroReserve), debugX, debugY + debugSpacing * debugLine++, 10, wheelColor);
+			DrawText(TextFormat("coords : %.2fx%.0f", car.transform.position.x, car.transform.position.y), debugX, debugY + debugSpacing * debugLine++, 10, car.wheels.color);
+			DrawText(TextFormat("speed : %.2fx%.0f", car.speed.x, car.speed.y), debugX, debugY + debugSpacing * debugLine++, 10, car.wheels.color);
+			DrawText(TextFormat("velocity : %.2fx%.0f", car.acceleration.x, car.acceleration.y), debugX, debugY + debugSpacing * debugLine++, 10, car.wheels.color);
+			DrawText(TextFormat("nitro reserve : %.2f", car.nitro.reserve), debugX, debugY + debugSpacing * debugLine++, 10, car.wheels.color);
 
-			DrawText(TextFormat("BOUCHAUD Lucas - SEZNEC Romain", 42), debugX, SCREENSIZE.y - 20, 10, BLACK);
+			DrawText(TextFormat("BOUCHAUD Lucas - SEZNEC Romain", 42), debugX, WINDOW_HEIGHT - 20, 10, BLACK);
 
 			// Obstacle
 			DrawRectangle(obstaclePos.x, obstaclePos.y, obstacleSize.x, obstacleSize.y, obstacleColor);
