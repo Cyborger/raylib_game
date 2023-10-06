@@ -79,8 +79,21 @@ typedef struct Car
     Nitro nitro;
 } Car;
 
+typedef struct Obstacle
+{
+    GameTransform transform;
+    Color color;
+} Obstacle;
+
 //----------------------------------------------------------------------------------
 // Fonctions gameplay
 //----------------------------------------------------------------------------------
 // Création de la voiture à l'aide des données positionnelles
 Car create_car(GameTransform carTransform);
+
+// Création de l'obstacle
+Obstacle create_obstacle(GameTransform obstacleTransform);
+
+// Gestion des collisions de la voiture avec l'obstacle
+bool isCarCollidingObstacle(Car car, Obstacle obstacle);
+bool lineColliding(Vector2 pointA, Vector2 pointB, Vector2 pointC, Vector2 pointD);

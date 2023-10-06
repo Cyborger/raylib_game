@@ -26,10 +26,6 @@
 #include <stdlib.h>
 #include "ArduinoComP1DEFI.h"
 
-bool lineColliding(Vector2 pointA, Vector2 pointB, Vector2 pointC, Vector2 pointD)
-{
-	return (pointA.x <= pointD.x && pointC.x <= pointB.x) && (pointA.y <= pointD.y && pointC.y <= pointB.y);
-}
 
 
 int main(void)
@@ -45,16 +41,16 @@ int main(void)
 	GameTransform carTransform = {{400, 800}, {30, 60}};
 	Car car = create_car(carTransform);
 
+	GameTransform obstacleTransform = {{200, 150}, {100, 50}};
+	Obstacle obstacle = create_obstacle(obstacleTransform);
+
 	float nitroBarWidth = 100;
 	float nitroBarHeight = 30;
 	Vector2 nitroBar = { WINDOW_WIDTH - 10 - nitroBarWidth, WINDOW_HEIGHT - 10 - nitroBarHeight };
 
-	Vector2 obstaclePos = { 200, 150 };
-	Vector2 obstacleSize = { 100, 50 };
-	Color obstacleColor = BLACK;
-
 	float debugX = 10, debugY = 40;
 	float debugSpacing = 10, debugLine = 0;
+	Vector2 previousCarPosition = car.transform.position;
 
 	//--------------------------------------------------------------------------------------
 	// Game loop principale (code exécuté à chaque frame (60 fois par secondes))
@@ -66,6 +62,7 @@ int main(void)
 		 */
 
 		debugLine = 0;
+		bool carCollidingObstacle = isCarCollidingObstacle(car, obstacle);
 
 		/*
 		* Gestion de l'input
@@ -76,16 +73,16 @@ int main(void)
 		car.speed.x = car.speed.x + car.acceleration.x*GetFrameTime();
 		car.speed.y = car.speed.y + car.acceleration.y*GetFrameTime();
 
-		if (IsKeyDown(KEY_LEFT))
+		if (IsKeyDown(KEY_LEFT) && !carCollidingObstacle)
 			car.motorForce.x = -car.frictionCoefficient * car.horsePower;
 
-		if (IsKeyDown(KEY_RIGHT))
+		if (IsKeyDown(KEY_RIGHT) && !carCollidingObstacle)
 			car.motorForce.x = car.frictionCoefficient * car.horsePower;
 
-		if (IsKeyDown(KEY_UP))
+		if (IsKeyDown(KEY_UP) && !carCollidingObstacle)
 			car.motorForce.y = -car.frictionCoefficient * car.horsePower;
 
-		if (IsKeyDown(KEY_DOWN))
+		if (IsKeyDown(KEY_DOWN) && !carCollidingObstacle)
 		{
 			car.motorForce.y = car.frictionCoefficient * car.horsePower;
 			car.backlights.color = YELLOW;
@@ -142,17 +139,17 @@ int main(void)
 			car.speed.y = 0;
 		}
 
-		/*
-		Obstacle logic
-		if (car.transform.position.x > 400)
+		if (isCarCollidingObstacle(car, obstacle))
 		{
-			obstacleColor = SKYBLUE;
+			car.transform.position = previousCarPosition;
+			obstacle.color = RED;
+			car.speed.x = 0;
+			car.speed.y = 0;
 		}
 		else
 		{
-			obstacleColor = BLACK;
+			obstacle.color = BLACK;
 		}
-		*/
 
 		/*
 		{
@@ -169,6 +166,8 @@ int main(void)
 				car.transform.size.x--;
 		}
 		*/
+
+		previousCarPosition = car.transform.position;
 
 		 /* Gestion de l'affichage ici
 		 */
@@ -198,6 +197,9 @@ int main(void)
 			if (car.nitro.active)
 				DrawRectangle(car.transform.position.x, car.transform.position.y + car.transform.size.y, car.transform.size.x, car.transform.size.y / 15, BLUE);
 
+			// Obstacle
+			DrawRectangle(obstacle.transform.position.x, obstacle.transform.position.y, obstacle.transform.size.x, obstacle.transform.size.y, obstacle.color);
+
 			// nitro counter
 			DrawRectangle(nitroBar.x, nitroBar.y, nitroBarWidth + 4, nitroBarHeight + 4, DARKBLUE);
 			DrawRectangle(nitroBar.x + 2, nitroBar.y + 2, nitroBarWidth, nitroBarHeight, WHITE);
@@ -211,9 +213,6 @@ int main(void)
 			DrawText(TextFormat("nitro reserve : %.2f", car.nitro.reserve), debugX, debugY + debugSpacing * debugLine++, 10, car.wheels.color);
 
 			DrawText(TextFormat("BOUCHAUD Lucas - SEZNEC Romain", 42), debugX, WINDOW_HEIGHT - 20, 10, BLACK);
-
-			// Obstacle
-			DrawRectangle(obstaclePos.x, obstaclePos.y, obstacleSize.x, obstacleSize.y, obstacleColor);
 		}
 		EndDrawing();
 	}
