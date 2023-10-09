@@ -86,14 +86,54 @@ typedef struct Obstacle
 } Obstacle;
 
 //----------------------------------------------------------------------------------
+// Structures UI
+//----------------------------------------------------------------------------------
+typedef struct NitroUI
+{
+	GameTransform transform;
+} NitroUI;
+
+typedef struct DebugUI
+{
+	Vector2 position;
+	float spacing;
+	int line;
+} DebugUI;
+
+//----------------------------------------------------------------------------------
 // Fonctions gameplay
 //----------------------------------------------------------------------------------
 // Création de la voiture à l'aide des données positionnelles
 Car create_car(GameTransform carTransform);
 
+// Gestion des entrees utilisateurs
+void inputManagement(Car *car, bool carCollidingObstacle);
+
+// Gestion des collisions de la voiture avec les bords de la fenetre
+void windowEdgeManagement(Car *car);
+
 // Création de l'obstacle
 Obstacle create_obstacle(GameTransform obstacleTransform);
 
 // Gestion des collisions de la voiture avec l'obstacle
-bool isCarCollidingObstacle(Car car, Obstacle obstacle);
+void obstacleCollisionManagement(Car *car, Obstacle *obstacle, Vector2 previousCarPosition);
+bool isCarCollidingObstacle(Car *car, Obstacle *obstacle);
 bool lineColliding(Vector2 pointA, Vector2 pointB, Vector2 pointC, Vector2 pointD);
+
+//----------------------------------------------------------------------------------
+// Fonctions UI
+//----------------------------------------------------------------------------------
+// Creation de l'UI du nitro
+NitroUI create_nitro_ui(GameTransform nitroUiTransform);
+
+// Creation de l'UI de debug
+DebugUI create_debug_ui(Vector2 position, float spacing);
+
+//----------------------------------------------------------------------------------
+// Fonctions dessin
+//----------------------------------------------------------------------------------
+void drawCar(Car car);
+void drawObstacle(Obstacle obstacle);
+
+void drawNitroUi(NitroUI nitroUi, Car car);
+void drawDebugUi(DebugUI debugUi, Car car);
