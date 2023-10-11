@@ -10,33 +10,39 @@ endif
 
 ifeq ($(config),debug_x64)
   raylib_config = debug_x64
-  projet1defi_config = debug_x64
+  raylib_game_config = debug_x64
+  libserialport_config = debug_x64
 
 else ifeq ($(config),debug_x86)
   raylib_config = debug_x86
-  projet1defi_config = debug_x86
+  raylib_game_config = debug_x86
+  libserialport_config = debug_x86
 
 else ifeq ($(config),debug_arm64)
   raylib_config = debug_arm64
-  projet1defi_config = debug_arm64
+  raylib_game_config = debug_arm64
+  libserialport_config = debug_arm64
 
 else ifeq ($(config),release_x64)
   raylib_config = release_x64
-  projet1defi_config = release_x64
+  raylib_game_config = release_x64
+  libserialport_config = release_x64
 
 else ifeq ($(config),release_x86)
   raylib_config = release_x86
-  projet1defi_config = release_x86
+  raylib_game_config = release_x86
+  libserialport_config = release_x86
 
 else ifeq ($(config),release_arm64)
   raylib_config = release_arm64
-  projet1defi_config = release_arm64
+  raylib_game_config = release_arm64
+  libserialport_config = release_arm64
 
 else
   $(error "invalid configuration $(config)")
 endif
 
-PROJECTS := raylib projet1defi
+PROJECTS := raylib raylib_game libserialport
 
 .PHONY: all clean help $(PROJECTS) 
 
@@ -48,15 +54,22 @@ ifneq (,$(raylib_config))
 	@${MAKE} --no-print-directory -C _build -f raylib.make config=$(raylib_config)
 endif
 
-projet1defi: raylib
-ifneq (,$(projet1defi_config))
-	@echo "==== Building projet1defi ($(projet1defi_config)) ===="
-	@${MAKE} --no-print-directory -C _build -f projet1defi.make config=$(projet1defi_config)
+raylib_game: raylib libserialport
+ifneq (,$(raylib_game_config))
+	@echo "==== Building raylib_game ($(raylib_game_config)) ===="
+	@${MAKE} --no-print-directory -C _build -f raylib_game.make config=$(raylib_game_config)
+endif
+
+libserialport:
+ifneq (,$(libserialport_config))
+	@echo "==== Building libserialport ($(libserialport_config)) ===="
+	@${MAKE} --no-print-directory -C _build -f libserialport.make config=$(libserialport_config)
 endif
 
 clean:
 	@${MAKE} --no-print-directory -C _build -f raylib.make clean
-	@${MAKE} --no-print-directory -C _build -f projet1defi.make clean
+	@${MAKE} --no-print-directory -C _build -f raylib_game.make clean
+	@${MAKE} --no-print-directory -C _build -f libserialport.make clean
 
 help:
 	@echo "Usage: make [config=name] [target]"
@@ -73,6 +86,7 @@ help:
 	@echo "   all (default)"
 	@echo "   clean"
 	@echo "   raylib"
-	@echo "   projet1defi"
+	@echo "   raylib_game"
+	@echo "   libserialport"
 	@echo ""
 	@echo "For more information, see https://github.com/premake/premake-core/wiki"
