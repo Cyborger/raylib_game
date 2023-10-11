@@ -19,29 +19,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d24a491b-be6c-4d5b-8f47-14a618dd2c59" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.projet1defi/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.raylib_game.dir/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.raylib_game.dir/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.raylib_game.dir/.idea/indexLayout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.raylib_game.dir/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitmodules" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/premake5" beforeDir="false" afterPath="$PROJECT_DIR$/premake5" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet1defi.sln" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/x64/Debug/x64/Debug/libserialport.lib.recipe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/x64/Debug/x64/Debug/libserialport.tlog/CL.command.1.tlog" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/x64/Debug/x64/Debug/libserialport.tlog/CL.read.1.tlog" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/x64/Debug/x64/Debug/libserialport.tlog/CL.write.1.tlog" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/x64/Debug/x64/Debug/libserialport.tlog/Cl.items.tlog" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/x64/Debug/x64/Debug/libserialport.tlog/Lib-link.read.1.tlog" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/x64/Debug/x64/Debug/libserialport.tlog/Lib-link.write.1.tlog" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/x64/Debug/x64/Debug/libserialport.tlog/Lib.command.1.tlog" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/x64/Debug/x64/Debug/libserialport.tlog/libserialport.lastbuildstate" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/x64/Debug/x64/Debug/serialport.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/x64/Debug/x64/Debug/timing.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/x64/Debug/x64/Debug/windows.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/raylib" beforeDir="false" afterPath="$PROJECT_DIR$/raylib" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,7 +159,7 @@
       <workItem from="1696367305671" duration="240000" />
       <workItem from="1697026671873" duration="1495000" />
       <workItem from="1697029428811" duration="1254000" />
-      <workItem from="1697046395855" duration="2609000" />
+      <workItem from="1697046395855" duration="3790000" />
     </task>
     <servers />
   </component>
