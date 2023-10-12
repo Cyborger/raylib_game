@@ -15,7 +15,7 @@ enum
 //----------------------------------------------------------------------------------
 // Structures gameplay
 //----------------------------------------------------------------------------------
-// GameTransform, données positionnelles 
+// GameTransform, données positionnelles
 typedef struct GameTransform
 {
     Vector2 position;
@@ -136,4 +136,4 @@ void drawCar(Car car);
 void drawObstacle(Obstacle obstacle);
 
 void drawNitroUi(NitroUI nitroUi, Car car);
-void drawDebugUi(DebugUI debugUi, Car car);
+void drawDebugUi(DebugUI debugUi, Car car, char* arduinoMessage);

@@ -14,9 +14,9 @@
 
 /**
 *  Projet 1 DEFI
-*     Nom prénom : Bouchaud Lucas
-*     Nom prénom : SEZNEC Romain
-*     Numéro binôme : L
+*     Nom prï¿½nom : Bouchaud Lucas
+*     Nom prï¿½nom : SEZNEC Romain
+*     Numï¿½ro binï¿½me : L
 */
 
 #include "raylib.h"
@@ -50,11 +50,20 @@ int main(void)
 
 	Vector2 previousCarPosition = car.transform.position;
 
+    // Arduino
+    char* portName = "/dev/ttyUSB0";
+    SerialCom sCom = startArduinoConnection(portName, 9600);
+    char* arduinoMessage = "(null)";
+
 	//--------------------------------------------------------------------------------------
-	// Game loop principale (code exécuté à chaque frame (60 fois par secondes))
+	// Game loop principale (code exï¿½cutï¿½ ï¿½ chaque frame (60 fois par secondes))
 	//--------------------------------------------------------------------------------------
 	while (!WindowShouldClose())    // Detect window close button or ESC key
 	{
+        char* arduinoMessageHard = arduinoReceiveLatestMsg(sCom, '<', '>');
+        if (arduinoMessageHard)
+            arduinoMessage = arduinoMessageHard;
+
 		bool carCollidingObstacle = isCarCollidingObstacle(&car, &obstacle);
 		debugUi.line = 0;
 
@@ -80,7 +89,7 @@ int main(void)
 
 			// UI
 			drawNitroUi(nitroUi, car);
-			drawDebugUi(debugUi, car);
+			drawDebugUi(debugUi, car, arduinoMessage);
 		}
 		EndDrawing();
 	}
@@ -89,6 +98,7 @@ int main(void)
 	// De-Initialization
 	//--------------------------------------------------------------------------------------
 
+    closeArduinoConnection(sCom); // Close arduino connection
 	CloseAudioDevice();     // Close audio context
 	CloseWindow();          // Close window and OpenGL context
 

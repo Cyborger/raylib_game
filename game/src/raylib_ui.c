@@ -28,13 +28,14 @@ void drawNitroUi(NitroUI nitroUi, Car car)
 	DrawRectangle(nitroUi.transform.position.x + 2, nitroUi.transform.position.y + 2, car.nitro.reserve, nitroUi.transform.size.y, DARKBLUE);
 }
 
-void drawDebugUi(DebugUI debugUi, Car car)
+void drawDebugUi(DebugUI debugUi, Car car, char* arduinoMessage)
 {
 	DrawFPS(10, 10);
-	DrawText(TextFormat("coords : %.2fx%.0f", car.transform.position.x, car.transform.position.y), debugUi.position.x, debugUi.position.y + debugUi.spacing * debugUi.line++, 10, car.wheels.color);
-	DrawText(TextFormat("speed : %.2fx%.0f", car.speed.x, car.speed.y), debugUi.position.x, debugUi.position.y + debugUi.spacing * debugUi.line++, 10, car.wheels.color);
-	DrawText(TextFormat("velocity : %.2fx%.0f", car.acceleration.x, car.acceleration.y), debugUi.position.x, debugUi.position.y + debugUi.spacing * debugUi.line++, 10, car.wheels.color);
-	DrawText(TextFormat("nitro reserve : %.2f", car.nitro.reserve), debugUi.position.x, debugUi.position.y + debugUi.spacing * debugUi.line++, 10, car.wheels.color);
+	DrawText(TextFormat("coords: %.2fx%.0f", car.transform.position.x, car.transform.position.y), debugUi.position.x, debugUi.position.y + debugUi.spacing * debugUi.line++, 10, car.wheels.color);
+	DrawText(TextFormat("speed: %.2fx%.0f", car.speed.x, car.speed.y), debugUi.position.x, debugUi.position.y + debugUi.spacing * debugUi.line++, 10, car.wheels.color);
+	DrawText(TextFormat("velocity: %.2fx%.0f", car.acceleration.x, car.acceleration.y), debugUi.position.x, debugUi.position.y + debugUi.spacing * debugUi.line++, 10, car.wheels.color);
+	DrawText(TextFormat("nitro reserve: %.2f", car.nitro.reserve), debugUi.position.x, debugUi.position.y + debugUi.spacing * debugUi.line++, 10, car.wheels.color);
+    DrawText(TextFormat("Arduino message: %s", arduinoMessage), debugUi.position.x, debugUi.position.y + debugUi.spacing * debugUi.line++, 10, car.wheels.color);
 
 	DrawText(TextFormat("BOUCHAUD Lucas - SEZNEC Romain", 42), debugUi.position.x, WINDOW_HEIGHT - 20, 10, BLACK);
 }
