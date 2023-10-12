@@ -19,12 +19,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d24a491b-be6c-4d5b-8f47-14a618dd2c59" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/src/raylib_car_input.c" beforeDir="false" afterPath="$PROJECT_DIR$/game/src/raylib_car_input.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/src/raylib_game.c" beforeDir="false" afterPath="$PROJECT_DIR$/game/src/raylib_game.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/src/raylib_game.h" beforeDir="false" afterPath="$PROJECT_DIR$/game/src/raylib_game.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/src/raylib_ui.c" beforeDir="false" afterPath="$PROJECT_DIR$/game/src/raylib_ui.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,6 +99,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "settings.editor.selected.configurable": "preferences.pluginManager",
+    "structure.view.defaults.are.configured": "true",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>

@@ -68,7 +68,7 @@ int main(void)
 		debugUi.line = 0;
 
 		// Gestion de l'input
-		inputManagement(&car, carCollidingObstacle);
+		inputManagement(&car, carCollidingObstacle, arduinoMessage);
 		
 		// Gestion des collisions avec l'obstacle
 		obstacleCollisionManagement(&car, &obstacle, previousCarPosition);

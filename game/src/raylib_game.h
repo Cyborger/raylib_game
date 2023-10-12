@@ -107,7 +107,7 @@ typedef struct DebugUI
 Car create_car(GameTransform carTransform);
 
 // Gestion des entrees utilisateurs
-void inputManagement(Car *car, bool carCollidingObstacle);
+void inputManagement(Car *car, bool carCollidingObstacle, char* arduinoMessage);
 
 // Gestion des collisions de la voiture avec les bords de la fenetre
 void windowEdgeManagement(Car *car);
