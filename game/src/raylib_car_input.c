@@ -21,10 +21,10 @@ void inputManagement(Car *car, bool carCollidingObstacle, char* arduinoMessage)
 	if ((IsKeyDown(KEY_RIGHT) || joystick.x >= 570) && !carCollidingObstacle)
 		car->motorForce.x = car->frictionCoefficient * car->horsePower;
 
-	if ((IsKeyDown(KEY_UP) || joystick.y >= 570) && !carCollidingObstacle)
+	if ((IsKeyDown(KEY_UP) || joystick.y <= 480) && !carCollidingObstacle)
 		car->motorForce.y = -car->frictionCoefficient * car->horsePower;
 
-	if ((IsKeyDown(KEY_DOWN) || joystick.y <= 480) && !carCollidingObstacle)
+	if ((IsKeyDown(KEY_DOWN) || joystick.y >= 570) && !carCollidingObstacle)
 	{
 		car->motorForce.y = car->frictionCoefficient * car->horsePower;
 		car->backlights.color = YELLOW;
