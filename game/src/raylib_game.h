@@ -15,6 +15,22 @@ enum
 //----------------------------------------------------------------------------------
 // Structures gameplay
 //----------------------------------------------------------------------------------
+// RectangleEdges, structure obligatoire qui contient les 4 cotes de la voiture sous forme de flottants
+typedef struct RectangleEdges
+{
+    float left;   // left x-coordinate
+    float right;  // right x-coordinate
+    float top;    // top y-coordinate
+    float bottom; // bottom y-coordinate
+} RectangleEdges;
+
+// RectangleCentered, structure obligatoire qui contient deux Vector2 correspondant au centre du rectange et dimensions
+typedef struct RectangleCentered
+{
+    Vector2 center;
+    Vector2 size;
+} RectangleCentered;
+
 // GameTransform, données positionnelles
 typedef struct GameTransform
 {
@@ -99,6 +115,28 @@ typedef struct DebugUI
 	float spacing;
 	int line;
 } DebugUI;
+
+//----------------------------------------------------------------------------------
+// Fonctions obligatoires
+//----------------------------------------------------------------------------------
+// Fonction obligatoire, transforme un Rectangle en RectangleEdges
+RectangleEdges RecToRecEdges(Rectangle rectangle);
+
+// Fonction obligatoire, transforme un RectangleEdges en RectangeCentered
+RectangleCentered RecEdgesToRecCentered(RectangleEdges rectangleEdges);
+
+// Fonction obligatoire, transforme un RectangleCentered en Rectangle
+Rectangle RecCenteredToRec(RectangleCentered rectangleCentered);
+
+// Fonction obligatoire, transforme un Rectangle en RectangleCentered
+RectangleCentered RecToRecCentered(Rectangle rectangle);
+
+// Fonction obligatoire, transforme un RectangleCentered en RectangleEdges
+RectangleEdges RecCenteredToRecEdges(RectangleCentered rectangleCentered);
+
+// Fonction obligatoire, transforme un RectangleEdges en Rectangle
+Rectangle RecEdgesToRec(RectangleEdges rectangleEdges);
+
 
 //----------------------------------------------------------------------------------
 // Fonctions gameplay

@@ -19,8 +19,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d24a491b-be6c-4d5b-8f47-14a618dd2c59" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/game/src/raylib_rectangles.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/src/raylib_car_input.c" beforeDir="false" afterPath="$PROJECT_DIR$/game/src/raylib_car_input.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/src/raylib_game.c" beforeDir="false" afterPath="$PROJECT_DIR$/game/src/raylib_game.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/src/raylib_game.h" beforeDir="false" afterPath="$PROJECT_DIR$/game/src/raylib_game.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -160,7 +162,8 @@
       <workItem from="1697029428811" duration="1254000" />
       <workItem from="1697046395855" duration="4848000" />
       <workItem from="1697092321665" duration="3115000" />
-      <workItem from="1697177347276" duration="331000" />
+      <workItem from="1697177347276" duration="5417000" />
+      <workItem from="1699175149255" duration="4102000" />
     </task>
     <servers />
   </component>

@@ -14,9 +14,9 @@
 
 /**
 *  Projet 1 DEFI
-*     Nom pr�nom : Bouchaud Lucas
-*     Nom pr�nom : SEZNEC Romain
-*     Num�ro bin�me : L
+*     Nom prenom : Bouchaud Lucas
+*     Nom prenom : SEZNEC Romain
+*     Numero binome : L
 */
 
 #include "raylib.h"
@@ -51,12 +51,12 @@ int main(void)
 	Vector2 previousCarPosition = car.transform.position;
 
     // Arduino
-    char* portName = "/dev/ttyUSB0";
+    char* portName = "/dev/ttyACM0"; // prof = /dev/ttyACM0
     SerialCom sCom = startArduinoConnection(portName, 9600);
     char* arduinoMessage = "(null)";
 
 	//--------------------------------------------------------------------------------------
-	// Game loop principale (code ex�cut� � chaque frame (60 fois par secondes))
+	// Game loop principale (code execute a chaque frame (60 fois par secondes))
 	//--------------------------------------------------------------------------------------
 	while (!WindowShouldClose())    // Detect window close button or ESC key
 	{
