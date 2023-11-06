@@ -144,8 +144,8 @@ Rectangle RecEdgesToRec(RectangleEdges rectangleEdges);
 // Création de la voiture à l'aide des données positionnelles
 Car create_car(GameTransform carTransform);
 
-// Gestion des entrees utilisateurs
-void inputManagement(Car *car, bool carCollidingObstacle, char* arduinoMessage);
+// Gestion des entrees utilisateurs, indique si on peut allumer la led arduino
+bool inputManagement(Car *car, bool carCollidingObstacle, char* arduinoMessage);
 
 // Gestion des collisions de la voiture avec les bords de la fenetre
 void windowEdgeManagement(Car *car);

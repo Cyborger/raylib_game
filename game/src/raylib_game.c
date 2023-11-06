@@ -68,7 +68,10 @@ int main(void)
 		debugUi.line = 0;
 
 		// Gestion de l'input
-		inputManagement(&car, carCollidingObstacle, arduinoMessage);
+		bool activateLed = inputManagement(&car, carCollidingObstacle, arduinoMessage);
+
+        if (activateLed)
+            arduinoSendMsg(sCom, "<led>");
 		
 		// Gestion des collisions avec l'obstacle
 		obstacleCollisionManagement(&car, &obstacle, previousCarPosition);

@@ -1,9 +1,11 @@
 #include "raylib.h"
 #include "raylib_game.h"
+#include "ArduinoComP1DEFI.h"
 #include <stdio.h>
 
-void inputManagement(Car *car, bool carCollidingObstacle, char* arduinoMessage)
+bool inputManagement(Car *car, bool carCollidingObstacle, char* arduinoMessage)
 {
+    bool activateLed = false;
     Vector2 joystick = {525, 525};
     if (arduinoMessage != "(null)")
     {
@@ -28,6 +30,7 @@ void inputManagement(Car *car, bool carCollidingObstacle, char* arduinoMessage)
 	{
 		car->motorForce.y = car->frictionCoefficient * car->horsePower;
 		car->backlights.color = YELLOW;
+        activateLed = true;
 	}
 	else
 		car->backlights.color = RED;
@@ -52,4 +55,6 @@ void inputManagement(Car *car, bool carCollidingObstacle, char* arduinoMessage)
 
 	car->transform.position.x = car->transform.position.x + car->speed.x*GetFrameTime();
 	car->transform.position.y = car->transform.position.y + car->speed.y*GetFrameTime();
+
+    return activateLed;
 }
