@@ -15,7 +15,7 @@
 /**
 *  Projet 1 DEFI
 *     Nom prenom : Bouchaud Lucas
-*     Nom prenom : SEZNEC Romain
+*     Nom prenom : Seznec Romain
 *     Numero binome : L
 */
 
